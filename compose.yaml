@@ -1,0 +1,24 @@
+services:
+  my-api:
+    image: api-industria
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - network-api
+    secrets:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+networks:
+  network-api:
+    external: true
+
+secrets:
+  POSTGRES_USER:
+    external: true
+  POSTGRES_PASSWORD:
+    external: true
