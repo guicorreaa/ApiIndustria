@@ -17,20 +17,21 @@ public class ProductController {
     private final ProductionService productionService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerProduct(@Valid ProductRegisterDTO dto) {
+    public ResponseEntity<Void> registerProduct(@Valid @RequestBody ProductRegisterDTO dto) {
         productionService.registerNewProduct(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/update/{productId}")
-    public ResponseEntity<Void> updateProduct(@PathVariable("productId") Long productId, @Valid ProductUpdateDTO dto) {
+    public ResponseEntity<Void> updateProduct(@PathVariable("productId") Long productId, @Valid @RequestBody ProductUpdateDTO dto) {
         productionService.updateProduct(productId, dto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("productId") Long productId) {
-
+        productionService.deleteProduct(productId);
+        return ResponseEntity.noContent().build();
     }
 
 }
