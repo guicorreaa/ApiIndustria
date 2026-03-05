@@ -2,7 +2,8 @@ CREATE TABLE product
 (
     id    BIGSERIAL PRIMARY KEY,
     name  VARCHAR(255)   NOT NULL,
-    price DECIMAL(10, 2) NOT NULL CHECK (price >= 0)
+    price DECIMAL(10, 2) NOT NULL CHECK (price >= 0),
+        CONSTRAINT uq_product_name UNIQUE (name)
 );
 
 CREATE TABLE raw_material
