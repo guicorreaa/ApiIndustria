@@ -1,14 +1,17 @@
 package com.industria.estoque.service;
 
+import com.industria.estoque.dto.product.ProductResponseDTO;
 import com.industria.estoque.dto.rawMaterial.RawMaterialRegisterDTO;
+import com.industria.estoque.dto.rawMaterial.RawMaterialResponseDTO;
 import com.industria.estoque.dto.rawMaterial.RawMaterialUpdateDTO;
-import com.industria.estoque.exception.ProductInUseException;
 import com.industria.estoque.mapper.RawMaterialMapper;
 import com.industria.estoque.model.RawMaterial;
 import com.industria.estoque.repository.RawMaterialRepository;
 import com.industria.estoque.validator.RawMaterialValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,14 @@ public class RawMaterialService {
     private final RawMaterialValidator rawMaterialValidator;
     private final RawMaterialMapper rawMaterialMapper;
     private final RawMaterialRepository rawMaterialRepository;
+
+    public List<RawMaterialResponseDTO> getAllMaterials() {
+        return rawMaterialMapper.entityToDto(rawMaterialRepository.findAll());
+    }
+
+    public List<RawMaterialResponseDTO> getMaterial(Long materialId) {
+        return rawMaterialMapper.entityToDto(rawMaterialRepository.findRawMaterial(materialId));
+    }
 
     public void registerNewMaterial(RawMaterialRegisterDTO dto) {
         rawMaterialValidator.rawMaterialAlreadyExists(dto.name());

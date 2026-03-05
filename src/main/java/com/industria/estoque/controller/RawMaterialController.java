@@ -1,12 +1,15 @@
 package com.industria.estoque.controller;
 
 import com.industria.estoque.dto.rawMaterial.RawMaterialRegisterDTO;
+import com.industria.estoque.dto.rawMaterial.RawMaterialResponseDTO;
 import com.industria.estoque.dto.rawMaterial.RawMaterialUpdateDTO;
 import com.industria.estoque.service.RawMaterialService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("rawMaterial")
@@ -31,6 +34,16 @@ public class RawMaterialController {
     public ResponseEntity<Void> deleteRawMaterial(@PathVariable("materialId") Long materialId){
         rawMaterialService.deleteMaterial(materialId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<RawMaterialResponseDTO>> getAllMaterials() {
+        return ResponseEntity.ok(rawMaterialService.getAllMaterials());
+    }
+
+    @GetMapping("/get-material/{materialId}")
+    public ResponseEntity<List<RawMaterialResponseDTO>> getMaterial(@PathVariable("materialId") Long materialId) {
+        return ResponseEntity.ok(rawMaterialService.getMaterial(materialId));
     }
 
 }

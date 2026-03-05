@@ -3,21 +3,18 @@ package com.industria.estoque.service;
 import com.industria.estoque.dto.product.ProductRegisterDTO;
 import com.industria.estoque.dto.product.ProductResponseDTO;
 import com.industria.estoque.dto.product.ProductUpdateDTO;
-import com.industria.estoque.dto.product.ProductionSuggestionDTO;
 import com.industria.estoque.mapper.ProductMapper;
 import com.industria.estoque.model.Product;
 import com.industria.estoque.repository.ProductRepository;
 import com.industria.estoque.validator.ProductValidator;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductionService {
+public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
@@ -27,7 +24,13 @@ public class ProductionService {
         return productMapper.entityToDto(productRepository.findAllProductsOrderedByPrice());
     }
 
-//    public List<ProductionSuggestionDTO>
+    public List<ProductResponseDTO> getAllProducts() {
+        return productMapper.entityToDto(productRepository.findAll());
+    }
+
+    public List<ProductResponseDTO> getProduct(Long productId) {
+        return productMapper.entityToDto(productRepository.findProducts(productId));
+    }
 
     public void registerNewProduct(ProductRegisterDTO dto) {
         productValidator.productAlreadyExists(dto.name());
