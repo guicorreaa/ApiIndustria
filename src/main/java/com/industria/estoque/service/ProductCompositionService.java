@@ -2,6 +2,7 @@ package com.industria.estoque.service;
 
 import com.industria.estoque.dto.productComposition.CompositionItemRegisterDTO;
 import com.industria.estoque.dto.productComposition.CompositionItemUpdateDTO;
+import com.industria.estoque.dto.productComposition.CompositionResponseDTO;
 import com.industria.estoque.mapper.ProductCompositionMapper;
 import com.industria.estoque.model.Product;
 import com.industria.estoque.model.ProductComposition;
@@ -12,6 +13,8 @@ import com.industria.estoque.validator.ProductValidator;
 import com.industria.estoque.validator.RawMaterialValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +49,11 @@ public class ProductCompositionService {
     public void deleteComposition(Long compositionId) {
         ProductComposition composition = productCompositionValidator.productCompositionExists(compositionId);
         productCompositionRepository.delete(composition);
+    }
+
+    public List<CompositionResponseDTO> getByProduct(Long productId) {
+        List<ProductComposition> compositions = productCompositionRepository.findByProductId(productId);
+        return productCompositionMapper.entityToDto(compositions);
     }
 
 }
