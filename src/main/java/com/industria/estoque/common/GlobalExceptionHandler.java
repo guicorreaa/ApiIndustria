@@ -39,6 +39,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
     }
 
+    @ExceptionHandler(ProductCompositionNoExistsException.class)
+    public ResponseEntity<String> handleProductCompositionNoExistsException(ProductCompositionNoExistsException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
 }
 
 
